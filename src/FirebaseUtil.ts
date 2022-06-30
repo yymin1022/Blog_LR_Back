@@ -3,6 +3,7 @@ import {collection, doc, getDoc, getDocs, getFirestore, orderBy, query} from "fi
 
 import dotenv from "dotenv";
 
+dotenv.config();
 const firebaseConfig = {
     apiKey: process.env.FB_API_KEY,
     authDomain: process.env.FB_AUTH_DOMAIN,
