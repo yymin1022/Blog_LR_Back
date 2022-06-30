@@ -23,6 +23,10 @@ export const getFBPostData = (postType : string, postID : string) => {
 
 }
 
+export const getFBPostImage = (postType : string, postID : string, srcID : string) => {
+
+}
+
 export const getFBPostList = (postType : string) => {
 
 }
