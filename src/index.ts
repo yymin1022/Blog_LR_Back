@@ -3,10 +3,9 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import http from "http";
 
+dotenv.config();
 const app = express();
 const server = http.createServer(app);
-
-dotenv.config();
 
 app.get("/", (req: Request, res: Response) => {
     res.redirect(process.env["URL_PUB"] as string);
