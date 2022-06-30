@@ -1,6 +1,8 @@
 import {initializeApp} from "firebase/app";
 import {collection, doc, getDoc, getDocs, getFirestore, orderBy, query} from "firebase/firestore";
 
+import dotenv from "dotenv";
+
 const firebaseConfig = {
     apiKey: process.env.FB_API_KEY,
     authDomain: process.env.FB_AUTH_DOMAIN,
