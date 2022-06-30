@@ -34,24 +34,29 @@ export const getFBPostData = async (postType : string, postID : string) => {
         }
     };
 
-    const postDocData = await getDoc(doc(firebaseDB, postType, postID));
-    if(postDocData.exists()){
-        resultData.RESULT_DATA.PostDate = postDocData.data().date;
-        resultData.RESULT_DATA.PostIsPinned = postDocData.data().isPinned;
-        resultData.RESULT_DATA.PostTag = postDocData.data().tag;
-        resultData.RESULT_DATA.PostTitle = postDocData.data().title;
+    try{
+        const postDocData = await getDoc(doc(firebaseDB, postType, postID));
+        if(postDocData.exists()){
+            resultData.RESULT_DATA.PostDate = postDocData.data().date;
+            resultData.RESULT_DATA.PostIsPinned = postDocData.data().isPinned;
+            resultData.RESULT_DATA.PostTag = postDocData.data().tag;
+            resultData.RESULT_DATA.PostTitle = postDocData.data().title;
 
-        let postURL = postDocData.data().url
-        resultData.RESULT_DATA.PostURL = postURL;
+            let postURL = postDocData.data().url
+            resultData.RESULT_DATA.PostURL = postURL;
 
-        let postDir = `${process.env.POST_DATA_DIR}/${postType}/${postURL}`
-        resultData.RESULT_DATA.PostContent = fs.readFileSync(`${postDir}/post.md`,"utf8");
+            let postDir = `${process.env.POST_DATA_DIR}/${postType}/${postURL}`
+            resultData.RESULT_DATA.PostContent = fs.readFileSync(`${postDir}/post.md`,"utf8");
 
-        resultData.RESULT_CODE = 200;
-        resultData.RESULT_MSG = "Success";
-    }else{
+            resultData.RESULT_CODE = 200;
+            resultData.RESULT_MSG = "Success";
+        }else{
+            resultData.RESULT_CODE = 100;
+            resultData.RESULT_MSG = "No Such Post!";
+        }
+    }catch(error){
         resultData.RESULT_CODE = 100;
-        resultData.RESULT_MSG = "No Such Post!";
+        resultData.RESULT_MSG = error as string;
     }
 
     return resultData;
