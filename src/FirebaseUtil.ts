@@ -19,6 +19,10 @@ export const initFB = () => {
     firebaseDB = getFirestore();
 }
 
+export const getFBPostData = (postType : string) => {
+
+}
+
 export const getFBPostList = (postType : string) => {
 
 }
