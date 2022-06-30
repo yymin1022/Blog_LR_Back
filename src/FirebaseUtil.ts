@@ -58,7 +58,6 @@ export const getFBPostData = async (postType : string, postID : string) => {
 }
 
 export const getFBPostImage = (postType : string, postID : string, srcID : string) => {
-    let resultCode = 200;
     let resultData = {
         RESULT_CODE: 0,
         RESULT_MSG: "",
@@ -66,29 +65,24 @@ export const getFBPostImage = (postType : string, postID : string, srcID : strin
             ImageData: ""
         }
     };
-    let resultMsg = "Success";
 
-    let srcDir = "";
+    let srcDir = `${process.env.POST_DATA_DIR}/${postType}`;
     if(postType != "solving"){
-        srcDir = `${process.env.POST_DATA_DIR}/${postType}/${postID}`;
-    }else{
-        srcDir = `${process.env.POST_DATA_DIR}/${postType}`;
+        srcDir = srcDir + `/${postID}`;
     }
 
     try{
         let tempData = fs.readFileSync(`${srcDir}/${srcID}`);
-        let srcData = Buffer.from(tempData).toString("base64");
+        resultData.RESULT_DATA.ImageData = Buffer.from(tempData).toString("base64");
 
-        resultData.RESULT_DATA = {
-            ImageData: srcData
-        };
+        resultData.RESULT_CODE = 200;
+        resultData.RESULT_MSG = "Success";
     }catch(error){
-        resultCode = 100;
-        resultMsg = error as string;
+        resultData.RESULT_CODE = 100;
+        resultData.RESULT_MSG = error as string;
     }
 
-    resultData.RESULT_CODE = resultCode;
-    resultData.RESULT_MSG = resultMsg;
+    return resultData;
 }
 
 export const getFBPostList = async (postType : string) => {
