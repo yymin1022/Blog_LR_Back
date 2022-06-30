@@ -21,47 +21,40 @@ export const initFB = () => {
 }
 
 export const getFBPostData = async (postType : string, postID : string) => {
-    let resultCode = 200;
-    let resultMsg = "Success";
-
     let resultData = {
-        RESULT_CODE: resultCode,
-        RESULT_MSG: resultMsg,
-        RESULT_DATA: {}
+        RESULT_CODE: 0,
+        RESULT_MSG: "",
+        RESULT_DATA: {
+            PostContent: "",
+            PostDate: "",
+            PostIsPinned: "",
+            PostTag: "",
+            PostTitle: "",
+            PostURL: ""
+        }
     };
-
-    let postContent = "";
-    let postDate = "";
-    let postDir = "";
-    let postIsPinned = "";
-    let postTag = "";
-    let postTitle = "";
-    let postURL = "";
 
     const postDocData = await getDoc(doc(firebaseDB, postType, postID));
-    if(postDocData.exists()) {
-        postDate = postDocData.data().date;
-        postIsPinned = postDocData.data().isPinned;
-        postTag = postDocData.data().tag;
-        postTitle = postDocData.data().title;
-        postURL = postDocData.data().url;
+    if(postDocData.exists()){
+        resultData.RESULT_DATA.PostDate = postDocData.data().date;
+        resultData.RESULT_DATA.PostIsPinned = postDocData.data().isPinned;
+        resultData.RESULT_DATA.PostTag = postDocData.data().tag;
+        resultData.RESULT_DATA.PostTitle = postDocData.data().title;
 
-        postDir = `${process.env.POST_DATA_DIR}/${postType}/${postURL}`
-        postContent = fs.readFileSync(`${postDir}/post.md`,"utf8");
+        let postURL = postDocData.data().url
+        resultData.RESULT_DATA.PostURL = postURL;
+
+        let postDir = `${process.env.POST_DATA_DIR}/${postType}/${postURL}`
+        resultData.RESULT_DATA.PostContent = fs.readFileSync(`${postDir}/post.md`,"utf8");
+
+        resultData.RESULT_CODE = 200;
+        resultData.RESULT_MSG = "Success";
     }else{
-        postContent = "No such Post";
+        resultData.RESULT_CODE = 100;
+        resultData.RESULT_MSG = "No Such Post!";
     }
 
-    resultData.RESULT_CODE = resultCode;
-    resultData.RESULT_MSG = resultMsg;
-    resultData.RESULT_DATA = {
-        PostContent: postContent,
-        PostDate: postDate,
-        PostIsPinned: postIsPinned,
-        PostTag: postTag,
-        PostTitle: postTitle,
-        PostURL: postURL
-    };
+    return resultData;
 }
 
 export const getFBPostImage = (postType : string, postID : string, srcID : string) => {
