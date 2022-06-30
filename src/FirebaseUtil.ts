@@ -63,6 +63,39 @@ export const getFBPostImage = (postType : string, postID : string, srcID : strin
     console.log(`SRC ID is ${srcID}`);
 }
 
-export const getFBPostList = (postType : string) => {
-    console.log(`Post Type is ${postType}`);
+export const getFBPostList = async (postType : string) => {
+    let postCount = 0;
+    let postList: any[] = [];
+
+    let resultCode = 200;
+    let resultMsg = "Success";
+
+    let resultData = {
+        RESULT_CODE: resultCode,
+        RESULT_MSG: resultMsg,
+        RESULT_DATA: {}
+    };
+
+    let postCollectionList = await getDocs(query(collection(firebaseDB, postType), orderBy("isPinned", "desc")));
+    postCollectionList.forEach((curData) => {
+        postCount++;
+        let postData = {
+            "postDate": curData.get("date"),
+            "postID": curData.id,
+            "postIsPinned": curData.get("isPinned"),
+            "postTag": curData.get("tag"),
+            "postTitle": curData.get("title"),
+            "postURL": curData.get("url"),
+        };
+        postList.push(postData);
+    });
+
+    resultData.RESULT_CODE = resultCode;
+    resultData.RESULT_MSG = resultMsg;
+    resultData.RESULT_DATA = {
+        PostCount: postCount,
+        PostList: postList
+    };
+
+    return resultData;
 }
