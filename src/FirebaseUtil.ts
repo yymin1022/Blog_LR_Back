@@ -105,22 +105,27 @@ export const getFBPostList = async (postType : string) => {
         }
     };
 
-    let postCollectionList = await getDocs(query(collection(firebaseDB, postType), orderBy("isPinned", "desc")));
-    postCollectionList.forEach((curData) => {
-        resultData.RESULT_DATA.postCount++;
-        let postData = {
-            "postDate": curData.get("date"),
-            "postID": curData.id,
-            "postIsPinned": curData.get("isPinned"),
-            "postTag": curData.get("tag"),
-            "postTitle": curData.get("title"),
-            "postURL": curData.get("url"),
-        };
-        resultData.RESULT_DATA.postList.push(postData);
-    });
+    try{
+        let postCollectionList = await getDocs(query(collection(firebaseDB, postType), orderBy("isPinned", "desc")));
+        postCollectionList.forEach((curData) => {
+            resultData.RESULT_DATA.postCount++;
+            let postData = {
+                "postDate": curData.get("date"),
+                "postID": curData.id,
+                "postIsPinned": curData.get("isPinned"),
+                "postTag": curData.get("tag"),
+                "postTitle": curData.get("title"),
+                "postURL": curData.get("url"),
+            };
+            resultData.RESULT_DATA.postList.push(postData);
+        });
 
-    resultData.RESULT_CODE = 200;
-    resultData.RESULT_MSG = "Success";
+        resultData.RESULT_CODE = 200;
+        resultData.RESULT_MSG = "Success";
+    }catch(error){
+        resultData.RESULT_CODE = 100;
+        resultData.RESULT_MSG = error as string;
+    }
 
     return resultData;
 }
