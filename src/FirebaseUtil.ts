@@ -20,13 +20,16 @@ export const initFB = () => {
 }
 
 export const getFBPostData = (postType : string, postID : string) => {
-
+    console.log(`Post ID is ${postID}`);
+    console.log(`Post Type is ${postType}`);
 }
 
 export const getFBPostImage = (postType : string, postID : string, srcID : string) => {
-
+    console.log(`Post ID is ${postID}`);
+    console.log(`Post Type is ${postType}`);
+    console.log(`SRC ID is ${srcID}`);
 }
 
 export const getFBPostList = (postType : string) => {
-
+    console.log(`Post Type is ${postType}`);
 }
