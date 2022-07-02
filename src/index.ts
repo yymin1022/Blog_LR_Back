@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import http from "http";
 
+import * as CORS from "./CorsUtil";
 import * as FB from "./FirebaseUtil";
 
 dotenv.config();
@@ -11,6 +12,7 @@ const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 
+CORS.setCors(app);
 FB.initFB();
 
 app.get("/", (req: Request, res: Response) => {
