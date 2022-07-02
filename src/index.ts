@@ -11,6 +11,8 @@ const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 
+FB.initFB();
+
 app.get("/", (req: Request, res: Response) => {
     res.redirect(process.env["URL_PUB"] as string);
 });
