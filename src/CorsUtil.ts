@@ -9,6 +9,7 @@ export const setCors = (app: Express) => {
                 callback(null, true);
             }else{
                 callback(new Error("Not Allowed Origin!"));
+                console.log(origin);
             }
         },
     };
