@@ -15,6 +15,15 @@ app.get("/", (req: Request, res: Response) => {
     res.redirect(process.env["URL_PUB"] as string);
 });
 
+app.post("/getPostImage", (req: Request, res: Response) => {
+    let postID: string = req.body.postID;
+    let postType: string = req.body.postType;
+    let srcID: string = req.body.srcID;
+    let resultData: object = FB.getFBPostImage(postType, postID, srcID);
+
+    res.send(resultData);
+})
+
 app.post("/getPostList", async (req: Request, res: Response) => {
     let postType: string = req.body.postType;
     let resultData: object = await FB.getFBPostList(postType);
