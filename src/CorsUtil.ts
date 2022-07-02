@@ -11,4 +11,6 @@ const setCors = () => {
             }
         },
     };
+
+    return cors(corsOptions);
 }
