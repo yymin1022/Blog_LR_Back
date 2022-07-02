@@ -105,15 +105,15 @@ export const getFBPostList = async (postType : string) => {
         RESULT_CODE: 0,
         RESULT_MSG: "",
         RESULT_DATA: {
-            postCount: 0,
-            postList: postList
+            PostCount: 0,
+            PostList: postList
         }
     };
 
     try{
         let postCollectionList = await getDocs(query(collection(firebaseDB, postType), orderBy("isPinned", "desc")));
         postCollectionList.forEach((curData) => {
-            resultData.RESULT_DATA.postCount++;
+            resultData.RESULT_DATA.PostCount++;
             let postData = {
                 "postDate": curData.get("date"),
                 "postID": curData.id,
@@ -122,7 +122,7 @@ export const getFBPostList = async (postType : string) => {
                 "postTitle": curData.get("title"),
                 "postURL": curData.get("url"),
             };
-            resultData.RESULT_DATA.postList.push(postData);
+            resultData.RESULT_DATA.PostList.push(postData);
         });
 
         resultData.RESULT_CODE = 200;
