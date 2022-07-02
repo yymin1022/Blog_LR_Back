@@ -1,3 +1,5 @@
+import cors from "cors";
+
 const setCors = () => {
     const corsList = [process.env.URL_DEV, process.env.URL_PUB];
     const corsOptions = {
