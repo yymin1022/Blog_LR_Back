@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import http from "http";
 
+import * as CORS from "./CorsUtil";
 import * as FB from "./FirebaseUtil";
 
 dotenv.config();
