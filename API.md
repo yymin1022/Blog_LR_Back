@@ -27,6 +27,8 @@ https://api.dev-lr.com
 | Post Tag | String Array | Array with Post Tag Items | ["openvpn", "odroid"] |
 | Post Title | String | Post Title | Open VPN 구축으로 외부에서 내부망 접근하기 |
 | Post URL | String | URL for Load Data from Server | 220715-openvpn-install |
+| Image Data | String | Image that is Encoded with Base64 | 	data:image/;base64,iVBORw0KGgo |
+| Src Data | String | Image Filename for Load Image from Server | 1_install_package.png |
 
 ### Result Values
 
