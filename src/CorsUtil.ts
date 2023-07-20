@@ -14,5 +14,6 @@ export const setCors = (app: Express) => {
         },
     };
 
-    app.use(cors(corsOptions));
+    // app.use(cors(corsOptions));
+    app.use(cors());
 }
