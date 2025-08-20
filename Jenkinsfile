@@ -24,6 +24,7 @@ pipeline {
                     if (params.ENV_CREDENTIAL_ID) {
                         withCredentials([file(credentialsId: params.ENV_CREDENTIAL_ID, variable: 'ENV_FILE')]) {
                             sh 'cp $ENV_FILE ./.env'
+                            echo 'ENV File copied.'
                         }
                     } else {
                         echo 'No .env credential ID provided. Skipping injection.'
