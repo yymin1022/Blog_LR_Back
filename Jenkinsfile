@@ -55,6 +55,9 @@ pipeline {
     }
 
     post {
+        always {
+            sh 'rm -f .env'
+        }
         success {
             withCredentials([string(credentialsId: "discord-default", variable: "DISCORD_WEBHOOK_URL")]) {
                 discordSend description: "**Build ${BUILD_NUMBER}**가 성공하였습니다.\n\n${GIT_INFO}",
