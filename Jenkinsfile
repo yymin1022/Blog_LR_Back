@@ -1,3 +1,7 @@
+parameters {
+    string(name: 'ENV_CREDENTIAL_ID', defaultValue: '', description: 'Credential ID for the .env file')
+}
+
 pipeline {
     agent any
 
@@ -14,6 +18,20 @@ pipeline {
     }
 
     stages {
+        stage('Prepare Environment') {
+            steps {
+                script {
+                    if (params.ENV_CREDENTIAL_ID) {
+                        withCredentials([file(credentialsId: params.ENV_CREDENTIAL_ID, variable: 'ENV_FILE')]) {
+                            sh 'cp $ENV_FILE ./.env'
+                        }
+                    } else {
+                        echo 'No .env credential ID provided. Skipping injection.'
+                    }
+                }
+            }
+        }
+
         stage("Build Docker Image") {
             steps {
                 script {
